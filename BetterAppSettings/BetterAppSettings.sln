@@ -3,7 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterAppSettings", "BetterAppSettings\BetterAppSettings.csproj", "{879B174C-F5DD-40D0-B1B3-6CACE7C9AADA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterAppSettings.Sample", "BetterAppSettings.Sample\BetterAppSettings.Sample.csproj", "{AFDF4077-D09F-4618-9B3C-67EE7A39C925}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution", ".Solution", "{BB47CE90-4515-4764-99C3-66A131EE91EF}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\build.yml = ..\.github\workflows\build.yml
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{879B174C-F5DD-40D0-B1B3-6CACE7C9AADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{879B174C-F5DD-40D0-B1B3-6CACE7C9AADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{879B174C-F5DD-40D0-B1B3-6CACE7C9AADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{879B174C-F5DD-40D0-B1B3-6CACE7C9AADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFDF4077-D09F-4618-9B3C-67EE7A39C925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFDF4077-D09F-4618-9B3C-67EE7A39C925}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFDF4077-D09F-4618-9B3C-67EE7A39C925}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFDF4077-D09F-4618-9B3C-67EE7A39C925}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
