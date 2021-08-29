@@ -31,15 +31,19 @@ jobs:
           echo "Version '${GITHUB_REF/refs\/tags\//}'"
         shell: bash
 
+      - name: Debug
+        run: |
+          ls
+
       # #########################################
       # Publish NuGet
       # #########################################
-      - name: publish on version change
+      - name: publish to NuGet
         id: publish_nuget
         uses: rohith/publish-nuget@v2
         with:
           # Filepath of the project to be packaged, relative to root of repository
-          PROJECT_FILE_PATH: ${{env.APP_NAME}}/${{env.APP_NAME}}.csproj
+          PROJECT_FILE_PATH: ${{env.APP_NAME}}/${{env.APP_NAME}}/${{env.APP_NAME}}.csproj
 
           # NuGet package id, used for version detection & defaults to project name
           PACKAGE_NAME: ${{env.APP_NAME}}
