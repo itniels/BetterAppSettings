@@ -8,7 +8,7 @@ Install latest NuGet from here: https://www.nuget.org/packages/ITNiels.BetterApp
 Please check out the sample app to get a complete overview.
 
 ## Using dependency Injection
-It will be added lige below, in Startup.cs. The method takes an optional `BetterAppSettingsOptions` object that contains all settings available.
+It will be added like this, in Startup.cs. The method takes an optional `BetterAppSettingsOptions` object that contains all settings available.
 ```C#
 public static IHostBuilder CreateHostBuilder(string[] args) =>
 				Host.CreateDefaultBuilder(args)
