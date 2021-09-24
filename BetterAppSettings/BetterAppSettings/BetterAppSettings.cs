@@ -56,6 +56,9 @@ namespace ITNiels.BetterAppSettings
 				else
 					jObj = JObject.Parse(JsonConvert.SerializeObject(_values));
 
+				if (!File.Exists(_settingsPath))
+					File.Create(_settingsPath);
+
 				File.WriteAllText(_settingsPath, JsonConvert.SerializeObject(jObj, Formatting.Indented));
 			}
 		}
