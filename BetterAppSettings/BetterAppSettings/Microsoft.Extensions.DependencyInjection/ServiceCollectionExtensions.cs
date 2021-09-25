@@ -35,7 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
 				SerializerOptions.OverrideSettings(options.SerializerSettings);
 
 			// Create instance for DI
-			services.AddTransient<IBetterAppSettings<T>>(provider => {
+			services.AddSingleton<IBetterAppSettings<T>>(provider => {
 				var environment = provider.GetService<IHostEnvironment>();
 
 				return new BetterAppSettings<T>(environment, options);
