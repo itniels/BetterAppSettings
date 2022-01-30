@@ -1,6 +1,10 @@
 # BetterAppSettings
 A better version of IOptions for .net core with the ability to save.
 
+## Supported framework versions
+- [ ] .NET 6.0 (Soon)
+- [X] .NET 5.0
+
 # Installation
 Install latest NuGet from here: https://www.nuget.org/packages/ITNiels.BetterAppSettings/
 
