@@ -9,6 +9,7 @@
 		<RepositoryUrl>https://github.com/itniels/BetterAppSettings</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/itniels/BetterAppSettings</PackageProjectUrl>
 		<PackageIcon>settings_icon.png</PackageIcon>
+		<Description>A better version of IOptions for .net core with the ability to save.</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
