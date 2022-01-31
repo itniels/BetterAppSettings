@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using ITNiels.BetterAppSettings.BL.Exceptions;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -18,20 +19,31 @@ namespace ITNiels.BetterAppSettings
 
 		public BetterAppSettings(IHostEnvironment environment, BetterAppSettingsOptions options) : base()
 		{
-			_environment = environment;
-			_section = options.Section;
-			_file = options.Filename;
-			_workingDirectory = options.WorkingDirectory;
+			try
+			{
+				_environment = environment;
+				_section = options.Section;
+				_file = options.Filename;
+				_workingDirectory = options.WorkingDirectory;
 
-			var fileProvider = _environment.ContentRootFileProvider;
-			var fileInfo = fileProvider.GetFileInfo(_file);
-			var physicalPath = string.IsNullOrWhiteSpace(_workingDirectory) ? fileInfo.PhysicalPath : Path.Combine(_workingDirectory, _file);
+				// Sanity checks
+				if (_environment is null) throw new Exception("IHostEnvironment cannot be null");
+				if (string.IsNullOrEmpty(_file)) throw new Exception("Filename cannot be null or empty");
 
-			// Path
-			_settingsPath = physicalPath;
+				var fileProvider = _environment.ContentRootFileProvider;
+				var fileInfo = fileProvider.GetFileInfo(_file);
+				var physicalPath = string.IsNullOrWhiteSpace(_workingDirectory) ? fileInfo.PhysicalPath : Path.Combine(_workingDirectory, _file);
 
-			// Try read file to memory or create a new instance
-			_values = LoadJsonFromFile();
+				// Path
+				_settingsPath = physicalPath;
+
+				// Try read file to memory or create a new instance
+				_values = LoadJsonFromFile();
+			}
+			catch (Exception ex)
+			{
+				throw new BetterAppSettingsException("Unable to initialize BetterAppSettings", ex);
+			}
 		}
 
 		/// <summary>
@@ -44,19 +56,26 @@ namespace ITNiels.BetterAppSettings
 		/// </summary>
 		public void Save()
 		{
-			// Make sure we only save one at a time
-			lock (_lockObj)
+			try
 			{
-				var jObj = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(_settingsPath), SerializerOptions.JsonSerializerSettings);
-				var sectionObject = jObj.TryGetValue(_section, out JToken section) ? JsonConvert.DeserializeObject<T>(section.ToString(), SerializerOptions.JsonSerializerSettings) : (Values ?? new T());
-				var newSection = JObject.Parse(JsonConvert.SerializeObject(sectionObject));
+				// Make sure we only save one at a time
+				lock (_lockObj)
+				{
+					var jObj = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(_settingsPath), SerializerOptions.JsonSerializerSettings);
+					var sectionObject = jObj.TryGetValue(_section, out JToken section) ? JsonConvert.DeserializeObject<T>(section.ToString(), SerializerOptions.JsonSerializerSettings) : (Values ?? new T());
+					var newSection = JObject.Parse(JsonConvert.SerializeObject(sectionObject));
 
-				if (!string.IsNullOrWhiteSpace(_section))
-					jObj[_section] = JObject.Parse(JsonConvert.SerializeObject(_values));
-				else
-					jObj = JObject.Parse(JsonConvert.SerializeObject(_values));
+					if (!string.IsNullOrWhiteSpace(_section))
+						jObj[_section] = JObject.Parse(JsonConvert.SerializeObject(_values));
+					else
+						jObj = JObject.Parse(JsonConvert.SerializeObject(_values));
 
-				File.WriteAllText(_settingsPath, JsonConvert.SerializeObject(jObj, Formatting.Indented));
+					File.WriteAllText(_settingsPath, JsonConvert.SerializeObject(jObj, Formatting.Indented));
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new BetterAppSettingsException("Unable to save settings to disk!", ex);
 			}
 		}
 
@@ -82,9 +101,15 @@ namespace ITNiels.BetterAppSettings
 
 				return JsonConvert.DeserializeObject<T>(section.ToString(), SerializerOptions.JsonSerializerSettings);
 			}
-			catch (Exception)
+			// We accept that a fiel might not exist yet, and we return an empty object
+			catch (FileNotFoundException)
 			{
 				return new T();
+			}
+			// For all other cases we throw an exception
+			catch (Exception ex)
+			{
+				throw new BetterAppSettingsException("Unable to load json from disk", ex);
 			}
 		}
 	}
