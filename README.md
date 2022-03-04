@@ -8,6 +8,10 @@ A better version of IOptions for .net core with the ability to save.
 # Installation
 Install latest NuGet from here: https://www.nuget.org/packages/ITNiels.BetterAppSettings/
 
+```powershell
+Install-Package ITNiels.BetterAppSettings
+```
+
 # Usage
 Please check out the sample app to get a complete overview.
 
