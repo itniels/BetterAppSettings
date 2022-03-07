@@ -19,20 +19,20 @@ Please check out the sample app to get a complete overview.
 It will be added like this, in Startup.cs. The method takes an optional `BetterAppSettingsOptions` object that contains all settings available.
 ```C#
 public static IHostBuilder CreateHostBuilder(string[] args) =>
-				Host.CreateDefaultBuilder(args)
-						.ConfigureAppConfiguration((context, builder) => {
-						})
-						.ConfigureServices((context, services) => {
-							services.AddHostedService<Worker>();
+	Host.CreateDefaultBuilder(args)
+		.ConfigureAppConfiguration((context, builder) => {
+		})
+		.ConfigureServices((context, services) => {
+			services.AddHostedService<Worker>();
 
-							// Adding BetterAppSettings with all options
-							services.AddBetterAppSettings<ConfigModel>(new BetterAppSettingsOptions {
-								Section = "Application",
-								Filename = "appsettings.json",
-								WorkingDirectory = null,
-								SerializerSettings = null,
-							});
-						});
+			// Adding BetterAppSettings with all options
+			services.AddBetterAppSettings<ConfigModel>(new BetterAppSettingsOptions {
+				Section = "Application",
+				Filename = "appsettings.json",
+				WorkingDirectory = null,
+				SerializerSettings = null,
+			});
+		});
 ```
 
 ## Add a config class
