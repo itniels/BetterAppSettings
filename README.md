@@ -39,12 +39,12 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
 Default values below will be writting to the json on first save.
 ```C#
 public class ConfigModel
-	{
-		public string Name { get; set; } = "Default Name";
-		public int Counter { get; set; } = 5;
-		public DateTime? Time { get; set; }
-		public IList<StorageItem> Items { get; set; } = new List<StorageItem>();
-	}
+{
+	public string Name { get; set; } = "Default Name";
+	public int Counter { get; set; } = 5;
+	public DateTime? Time { get; set; }
+	public IList<StorageItem> Items { get; set; } = new List<StorageItem>();
+}
 ```
 
 ## Accessing and writting values
